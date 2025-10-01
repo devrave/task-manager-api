@@ -39,8 +39,17 @@ public class TaskController {
         return ResponseEntity.created(location).body(created); //genera un HTTP 201 Created con un encabezado Location.
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
+    public  ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task){
+        Task update = service.update(id, task);
+        return ResponseEntity.ok(update);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
     
 }
