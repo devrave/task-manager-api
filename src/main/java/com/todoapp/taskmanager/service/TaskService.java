@@ -8,7 +8,7 @@ public interface TaskService {
 
     //vamoa a creal los metodos de un crud elemental
 
-
+    List<Task> createAll(List<Task> tasks); // crear varias tareas (bulk
     Task create(Task task);          // crear una tarea
     List<Task> findAll();            // listar todas las tareas
     Task findById(Long id);          // buscar por id

@@ -2,6 +2,7 @@ package com.todoapp.taskmanager.controller;
 
 import com.todoapp.taskmanager.model.Task;
 import com.todoapp.taskmanager.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,12 @@ public class TaskController {
         Task created = service.create(task);
         URI location = URI.create("/tasks/" + created.getId()); // Una URI (Uniform Resource Identifier) es la dirección que identifica de forma única a un recurso en la API.
         return ResponseEntity.created(location).body(created); //genera un HTTP 201 Created con un encabezado Location.
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Task>> createBulk(@RequestBody List<Task> task) {  // En resumen:La URI en este endpoint sirve para devolver al cliente la dirección única del recurso recién creado. Así, después de hacer un POST a /tasks, el cliente recibe un 201 Created con un Location: /tasks/{id} que le dice dónde puede consultar ese recurso.
+        List<Task> created = service.createAll(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created); //genera un HTTP 201 Created con un encabezado Location.
     }
 
     @PutMapping("/{id}")

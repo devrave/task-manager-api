@@ -23,6 +23,23 @@ public class TaskServiceImpl implements TaskService{
 
 
     @Override
+    public List<Task> createAll(List<Task> tasks) {
+        if (tasks == null || tasks.isEmpty()) {
+            throw new IllegalArgumentException("La lista de tareas no debe estar vacía");
+        }
+
+        for (Task task : tasks) {
+            if (task == null) {
+                throw new IllegalArgumentException("Una de las tareas es nula");
+            }
+            if (task.getTitle() == null || task.getTitle().isBlank()) {
+                throw new IllegalArgumentException("Cada tarea debe tener un título");
+            }
+        }
+        return repo.saveAll(tasks);
+    }
+
+    @Override
     public Task create(Task task) {
         if(task == null) throw new IllegalArgumentException("La tarea no debe ser nula");
         if(task.getTitle() == null || task.getTitle().isBlank()){
